@@ -1,4 +1,5 @@
 from flask import Flask
+from random import randint
 
 app = Flask(__name__)
 
@@ -22,7 +23,7 @@ def madlib(adjective, noun):
     """Display a funny story to the user depending on what adjective/noun they enter."""
     return f'Today, I met a {adjective} cat standing on her hind legs. She offered me a {noun} and disappeared into the shadows.'
 
-@app.route('/multiply/<number1>/number2>')
+@app.route('/multiply/<number1>/<number2>')
 def multiply(number1, number2):
     """Multiply numbers entered by user."""
     if number1.isdigit() and number2.isdigit():
@@ -39,6 +40,16 @@ def sayntimes(word, n):
         return repeat
     else:
         return f'Invalid input. Please try again by entering a word and a number!'
+
+@app.route('/dicegame')
+def dicegame():
+    """Dice game that rolls a random number. If user rolls 6, they win."""
+    random_dice = randint(1, 6)
+    print_dice = f'You rolled a {random_dice}.'
+    if random_dice == 6:
+        return f'{print_dice} You won!'
+    else:
+        return f'{print_dice} You lost!'
 
 if __name__ == '__main__':
     app.run(debug=True)
